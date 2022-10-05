@@ -7,7 +7,7 @@ const userRoutes = require('./routes/user');
 const questionRoutes = require('./routes/questions');
 
 // mongoose.connect("mongodb://localhost:27017/microservice", {useNewUrlParser: true});
-mongoose.connect("mongodb+srv://node_interview:<password>@videointerview.6mnm0i0.mongodb.net/?retryWrites=true&w=majority", {useNewUrlParser: true});
+mongoose.connect("mongodb+srv://node_interview:node_interview@videointerview.6mnm0i0.mongodb.net/?retryWrites=true&w=majority", {useNewUrlParser: true});
 
 con.on('open', function(){
     console.log('connected')
