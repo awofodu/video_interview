@@ -1,35 +1,36 @@
-// const express = require('express');
-// const app = express();
-
-// const routes = require('./api/routes');
-// routes(app);
-
-// const port = process.env.PORT || 3000;
-
-// app.listen(port, () => {
-// console.log(`Listening to port http://localhost:${port}`);
-// });
-
 const express = require('express');
-
 const mongoose = require('mongoose');
-
-const app = express();
-
-// mongoose.connect("mongodb://localhost:27017/microservice", {useNewUrlParser: true});
-mongoose.connect("mongodb+srv://node_interview:node_interview@videointerview.6mnm0i0.mongodb.net/?retryWrites=true&w=majority", {useNewUrlParser: true});
-
 const con = mongoose.connection
+const cors = require('cors')
+const app = express();
+const userRoutes = require('./routes/user');
+const questionRoutes = require('./routes/questions');
+
+mongoose.connect("mongodb://localhost:27017/microservice", {useNewUrlParser: true});
 
 con.on('open', function(){
     console.log('connected')
 })
 
 app.use(express.json());
+app.use(cors());
 
-const userRoutes = require('./routes/user');
-app.use('/users', userRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/questions', questionRoutes);
 
-app.listen(9000, () => {
-    console.log('server started')
+// Handle production
+if(process.env.NODE_ENV === 'production'){
+    // Static folder
+    app.use(express.static(__dirname + '/public/'));
+
+    // Handle SPA
+    app.get(/.*/, (req, res) => {
+        res.sendFile(__dirname + '/public/index.html')
+    }); // It refers to any route at all
+}
+
+const port = process.env.PORT || 9000;
+
+app.listen(port, () => {
+    console.log(`Server started on port ${port}`);
 })
