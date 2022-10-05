@@ -16,7 +16,8 @@ const mongoose = require('mongoose');
 
 const app = express();
 
-mongoose.connect("mongodb://localhost:27017/microservice", {useNewUrlParser: true});
+// mongoose.connect("mongodb://localhost:27017/microservice", {useNewUrlParser: true});
+mongoose.connect("mongodb+srv://node_interview:node_interview@videointerview.6mnm0i0.mongodb.net/?retryWrites=true&w=majority", {useNewUrlParser: true});
 
 const con = mongoose.connection
 
